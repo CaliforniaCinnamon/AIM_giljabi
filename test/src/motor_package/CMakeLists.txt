@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(motor_package)
+
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp geometry_msgs
+)
+
+find_package(Boost REQUIRED COMPONENTS system)
+set (wiringPi_include = "/home/pi/wiringPi/WiringPi")
+
+
+
+catkin_package(
+)
+
+
+
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${wiringPi_include}
+)
+
+
+add_executable(motor_pid_tuning src/motor_pid_tuning.cpp)
+target_link_libraries(motor_pid_tuning
+  ${catkin_LIBRARIES} wiringPi -lrt
+)
+
+add_executable(pwm_test src/pwm_test.cpp)
+target_link_libraries(pwm_test
+  ${catkin_LIBRARIES} wiringPi -lrt
+)
